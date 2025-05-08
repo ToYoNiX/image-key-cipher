@@ -1,4 +1,18 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Encryptor</title>
+</head>
+<body>
+    <h2>Upload an image to encrypt or decrypt</h2>
+    <form action="/encrypt" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <button type="submit">Encrypt</button>
+    </form>
 
-{% block title %}Home{% endblock title %}
-{% block body %}Hello Home{% endblock body %}
+    <form action="/decrypt" method="POST">
+        <button type="submit">Decrypt</button>
+    </form>
+</body>
+</html>
