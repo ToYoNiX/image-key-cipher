@@ -1,18 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Image Encryptor</title>
-</head>
-<body>
+    <style>
+      img {
+        max-width: 400px;
+        margin-top: 20px;
+      }
+      .output-section {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
     <h2>Upload an image to encrypt or decrypt</h2>
-    <form action="/encrypt" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image" required>
-        <button type="submit">Encrypt</button>
+
+    <form id="uploadForm" method="POST" enctype="multipart/form-data">
+      <label for="action">Choose an action:</label>
+      <select name="action" id="action" required>
+        <option value="encrypt">Encrypt</option>
+        <option value="decrypt">Decrypt</option>
+      </select>
+
+      <br /><br />
+
+      <input type="file" name="image" required />
+      <button type="submit">Submit</button>
     </form>
 
-    <form action="/decrypt" method="POST">
-        <button type="submit">Decrypt</button>
-    </form>
-</body>
+    <script>
+      // Set form action dynamically before submission
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", function (e) {
+          const action = document.getElementById("action").value;
+          this.action = "/" + action; // Dynamically set action to either /encrypt or /decrypt
+        });
+    </script>
+
+    {% if image_data %}
+    <div class="output-section">
+      <h3>{{ action }} Image:</h3>
+      <img
+        id="outputImage"
+        src="data:image/png;base64,{{ image_data }}"
+        alt="{{ action }} Image"
+      />
+      <br />
+      <a
+        id="downloadLink"
+        href="data:image/png;base64,{{ image_data }}"
+        download="{{ action|lower }}.png"
+      >
+        <button type="button">Download</button>
+      </a>
+    </div>
+    {% endif %}
+  </body>
 </html>

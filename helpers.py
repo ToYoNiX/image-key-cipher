@@ -8,7 +8,7 @@ def confuse_image(image, seed, reverse=False, perm=None):
         perm = np.random.permutation(len(flat_image))
         confused_flat = flat_image[perm]
         confused_image = confused_flat.reshape(image.shape)
-        return confused_image, perm
+        return confused_image, perm  # Return permutation along with confused image
     else:
         if perm is None:
             raise ValueError("Permutation array is required for reversing confusion.")
